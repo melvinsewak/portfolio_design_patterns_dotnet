@@ -68,8 +68,6 @@ public class MediaAdapter : IMediaPlayer
 /// </summary>
 public class AudioPlayer : IMediaPlayer
 {
-    private readonly MediaAdapter? _adapter;
-    
     public void Play(string fileName)
     {
         string extension = Path.GetExtension(fileName).ToLower();
