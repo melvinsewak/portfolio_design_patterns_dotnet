@@ -19,6 +19,9 @@ Console.WriteLine("\n\n█ STRUCTURAL PATTERNS █\n");
 BridgeDemo.Run();
 CompositeDemo.Run();
 DecoratorDemo.Run();
+FacadeDemo.Run();
+FlyweightDemo.Run();
+ProxyDemo.Run();
 
 Console.WriteLine("\n╔══════════════════════════════════════════════════════════════╗");
 Console.WriteLine("║                    Demo Complete                             ║");
