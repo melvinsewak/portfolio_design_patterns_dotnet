@@ -1,5 +1,6 @@
 ﻿using DesignPatterns.CreationalPatterns;
 using DesignPatterns.StructuralPatterns;
+using DesignPatterns.ModernPatterns;
 
 Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
 Console.WriteLine("║     Design Patterns Portfolio - .NET 10.0 Examples          ║");
@@ -23,6 +24,14 @@ DecoratorDemo.Run();
 FacadeDemo.Run();
 FlyweightDemo.Run();
 ProxyDemo.Run();
+
+// Modern Patterns
+Console.WriteLine("\n\n█ MODERN PATTERNS █\n");
+await DependencyInjectionDemo.Run();
+await RepositoryPatternDemo.Run();
+await UnitOfWorkDemo.Run();
+await CQRSPatternDemo.Run();
+await SpecificationPatternDemo.Run();
 
 Console.WriteLine("\n╔══════════════════════════════════════════════════════════════╗");
 Console.WriteLine("║                    Demo Complete                             ║");
