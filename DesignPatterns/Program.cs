@@ -1,5 +1,6 @@
 ﻿using DesignPatterns.CreationalPatterns;
 using DesignPatterns.StructuralPatterns;
+using DesignPatterns.BehavioralPatterns;
 using DesignPatterns.ModernPatterns;
 
 Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
@@ -24,6 +25,20 @@ DecoratorDemo.Run();
 FacadeDemo.Run();
 FlyweightDemo.Run();
 ProxyDemo.Run();
+
+// Behavioral Patterns
+Console.WriteLine("\n\n█ BEHAVIORAL PATTERNS █\n");
+ChainOfResponsibilityDemo.Run();
+CommandDemo.Run();
+IteratorDemo.Run();
+MediatorDemo.Run();
+MementoDemo.Run();
+ObserverDemo.Run();
+StateDemo.Run();
+StrategyDemo.Run();
+TemplateMethodDemo.Run();
+VisitorDemo.Run();
+InterpreterDemo.Run();
 
 // Modern Patterns
 Console.WriteLine("\n\n█ MODERN PATTERNS █\n");
