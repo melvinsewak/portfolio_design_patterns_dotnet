@@ -803,8 +803,8 @@ public class AzureProductWriteRepository
         await Task.Delay(15); // Simulate Azure SQL write latency
         product.Id = _nextId++;
         product.Version = 1;
-        product.CreatedAt = DateTime.UtcNow;
-        product.UpdatedAt = DateTime.UtcNow;
+        product.CreatedAt = DateTime.Now;
+        product.UpdatedAt = DateTime.Now;
         _products.Add(product);
         return product.Id;
     }
@@ -827,7 +827,7 @@ public class AzureProductWriteRepository
             throw new InvalidOperationException($"Concurrency conflict: Product version mismatch");
         
         product.Version++; // Increment version
-        product.UpdatedAt = DateTime.UtcNow;
+        product.UpdatedAt = DateTime.Now;
         var index = _products.IndexOf(existing);
         _products[index] = product;
     }
@@ -1164,7 +1164,7 @@ public class ReadModelUpdater
             IsAvailable = @event.Stock > 0,
             PriceFormatted = $"${@event.Price:F2}",
             SearchVector = $"{@event.Name} {@event.Description} {@event.Category}".ToLower(),
-            LastUpdated = DateTime.UtcNow
+            LastUpdated = DateTime.Now
         };
 
         await _readRepo.UpsertAsync(readModel);
@@ -1173,25 +1173,31 @@ public class ReadModelUpdater
     private async Task HandleProductPriceUpdatedAsync(ProductPriceUpdatedEvent @event)
     {
         var readModel = await _readRepo.GetByIdAsync(@event.AggregateId);
-        if (readModel != null)
+        if (readModel == null)
         {
-            readModel.Price = @event.NewPrice;
-            readModel.PriceFormatted = $"${@event.NewPrice:F2}";
-            readModel.LastUpdated = DateTime.UtcNow;
-            await _readRepo.UpsertAsync(readModel);
+            Console.WriteLine($"[EVENT PROCESSOR] Warning: Read model not found for ProductPriceUpdatedEvent (ProductId={@event.AggregateId}). Event will be skipped.");
+            return;
         }
+
+        readModel.Price = @event.NewPrice;
+        readModel.PriceFormatted = $"${@event.NewPrice:F2}";
+        readModel.LastUpdated = DateTime.Now;
+        await _readRepo.UpsertAsync(readModel);
     }
 
     private async Task HandleProductStockUpdatedAsync(ProductStockUpdatedEvent @event)
     {
         var readModel = await _readRepo.GetByIdAsync(@event.AggregateId);
-        if (readModel != null)
+        if (readModel == null)
         {
-            readModel.Stock = @event.NewStock;
-            readModel.IsAvailable = @event.NewStock > 0;
-            readModel.LastUpdated = DateTime.UtcNow;
-            await _readRepo.UpsertAsync(readModel);
+            Console.WriteLine($"[EVENT PROCESSOR] Warning: Read model not found for ProductStockUpdatedEvent (ProductId={@event.AggregateId}). Event will be skipped.");
+            return;
         }
+
+        readModel.Stock = @event.NewStock;
+        readModel.IsAvailable = @event.NewStock > 0;
+        readModel.LastUpdated = DateTime.Now;
+        await _readRepo.UpsertAsync(readModel);
     }
 
     private async Task HandleProductDeletedAsync(ProductDeletedEvent @event)
