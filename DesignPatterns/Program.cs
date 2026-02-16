@@ -16,6 +16,7 @@ ObjectPoolDemo.Run();
 
 // Structural Patterns
 Console.WriteLine("\n\n█ STRUCTURAL PATTERNS █\n");
+AdapterDemo.Run();
 BridgeDemo.Run();
 CompositeDemo.Run();
 DecoratorDemo.Run();
